@@ -1,0 +1,160 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', Roboto, "Helvetica Neue", sans-serif;
+    background-color: #f8fafc;
+    color: #1e293b;
+}
+
+/* Scrollbar Style */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Premium Table Style */
+.mat-mdc-table {
+    background: white !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05) !important;
+}
+
+.mat-mdc-header-row {
+    background-color: #f1f5f9 !important;
+    /* Un peu plus foncé pour l'en-tête */
+    min-height: 56px !important;
+}
+
+.mat-mdc-header-cell {
+    color: #334155 !important;
+    font-weight: 700 !important;
+    font-size: 0.8125rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    border-bottom: 2px solid #cbd5e1 !important;
+}
+
+/* Zebra Stripes */
+.mat-mdc-row:nth-child(even) {
+    background-color: #f8fafc !important;
+}
+
+.mat-mdc-row {
+    transition: all 0.2s ease !important;
+    min-height: 64px !important;
+}
+
+.mat-mdc-row:hover {
+    background-color: #eff6ff !important;
+    /* Bleu très léger au survol */
+    transform: scale(1.002);
+    box-shadow: inset 4px 0 0 0 #3b82f6;
+    /* Petite barre bleue à gauche au survol */
+}
+
+.mat-mdc-cell {
+    color: #475569 !important;
+    font-size: 0.9375rem !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+/* Status Chips/Badges Global Styles */
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    text-transform: uppercase;
+}
+
+.status-badge.status-success {
+    background-color: #dcfce7 !important;
+    color: #166534 !important;
+}
+
+.status-badge.status-warning {
+    background-color: #fef9c3 !important;
+    color: #854d0e !important;
+}
+
+.status-badge.status-error {
+    background-color: #fee2e2 !important;
+    color: #991b1b !important;
+}
+
+.status-badge.status-info {
+    background-color: #e0e7ff !important;
+    color: #3730a3 !important;
+}
+
+
+/* Specific highlight for IDs or important codes */
+.code-highlight {
+    font-family: 'JetBrains Mono', monospace;
+    color: #6366f1;
+    font-weight: 600;
+    background: #f5f3ff;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+
+/* Global Card Styling */
+.mat-mdc-card {
+    border-radius: 12px !important;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1) !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+/* Form Fields */
+.mat-mdc-form-field {
+    width: 100%;
+}
+
+/* Buttons */
+.mat-mdc-raised-button {
+    border-radius: 8px !important;
+    padding: 0 24px !important;
+    font-weight: 500 !important;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1) !important;
+}
+
+/* SNACKBARS */
+.success-snackbar {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+.error-snackbar {
+    background-color: #ef4444 !important;
+    color: white !important;
+}
+
+/* Fix for datepicker overlay inside dialogs */
+.cdk-overlay-container {
+    z-index: 2000 !important;
+}

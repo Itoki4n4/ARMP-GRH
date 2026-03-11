@@ -1,0 +1,139 @@
+<div class="layout-container" [class.sidebar-collapsed]="sidebarCollapsed">
+  <!-- Sidebar -->
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav mode="side" opened class="sidebar" [class.collapsed]="sidebarCollapsed">
+      <!-- Logo et titre -->
+      <div class="sidebar-header">
+        <div class="logo-container">
+          <div class="logo">
+            <img src="assets/logo_armp1.png" alt="Logo ARMP" class="sidebar-logo-img">
+          </div>
+          <div class="brand-info" *ngIf="!sidebarCollapsed">
+            <h1 class="brand-title">ARMP</h1>
+            <p class="brand-subtitle">Gestion RH</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Menu de navigation -->
+      <nav class="sidebar-nav">
+        <mat-nav-list>
+          <ng-container *ngFor="let item of menuItems; let i = index">
+            <!-- Item sans sous-menu -->
+            <a *ngIf="!item.children" mat-list-item [routerLink]="item.route" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: item.route === '/home'}" class="nav-item" matRipple
+              [matRippleColor]="'rgba(255, 255, 255, 0.1)'" [matTooltip]="sidebarCollapsed ? item.label : ''"
+              matTooltipPosition="right">
+              <div class="nav-item-content">
+                <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+                <span class="nav-label" *ngIf="!sidebarCollapsed">{{ item.label }}</span>
+                <span *ngIf="item.badge && !sidebarCollapsed" class="nav-badge">{{ item.badge }}</span>
+              </div>
+              <div class="nav-indicator"></div>
+            </a>
+
+            <!-- Item avec sous-menu (dropdown) -->
+            <div *ngIf="item.children" class="nav-group">
+              <a mat-list-item (click)="toggleMenu(item)" class="nav-item nav-item-parent"
+                [class.active]="isChildActive(item)" [class.expanded]="item.expanded" matRipple
+                [matRippleColor]="'rgba(255, 255, 255, 0.1)'" [matTooltip]="sidebarCollapsed ? item.label : ''"
+                matTooltipPosition="right">
+                <div class="nav-item-content">
+                  <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+                  <span class="nav-label" *ngIf="!sidebarCollapsed">{{ item.label }}</span>
+                  <mat-icon class="expand-icon" [@rotateIcon]="getIconState(item)" *ngIf="!sidebarCollapsed">
+                    {{ item.expanded ? 'expand_less' : 'expand_more' }}
+                  </mat-icon>
+                </div>
+                <div class="nav-indicator" *ngIf="isChildActive(item)"></div>
+              </a>
+
+              <!-- Sous-menu avec animation -->
+              <div class="submenu" *ngIf="item.expanded && !sidebarCollapsed" [@slideInOut]>
+                <a mat-list-item *ngFor="let child of item.children" [routerLink]="child.route"
+                  routerLinkActive="active" class="nav-item nav-item-child" matRipple
+                  [matRippleColor]="'rgba(255, 255, 255, 0.08)'">
+                  <div class="nav-item-content">
+                    <mat-icon class="nav-icon nav-icon-child">{{ child.icon }}</mat-icon>
+                    <span class="nav-label">{{ child.label }}</span>
+                  </div>
+                  <div class="nav-indicator-child"></div>
+                </a>
+              </div>
+            </div>
+          </ng-container>
+        </mat-nav-list>
+      </nav>
+    </mat-sidenav>
+
+    <!-- Contenu principal -->
+    <mat-sidenav-content class="main-content">
+      <!-- Top bar -->
+      <mat-toolbar class="top-toolbar">
+        <div class="toolbar-left">
+          <button mat-icon-button (click)="toggleSidebar()" class="sidebar-toggle">
+            <mat-icon>{{ sidebarCollapsed ? 'menu' : 'menu_open' }}</mat-icon>
+          </button>
+          <!-- Fil d'Ariane (Style ERPNext) -->
+          <div class="breadcrumb-container">
+            <ng-container *ngFor="let crumb of breadcrumbs; let last = last">
+              <a *ngIf="crumb.route && !last" [routerLink]="crumb.route" class="breadcrumb-link">
+                {{ crumb.label }}
+              </a>
+              <span *ngIf="!crumb.route || last" class="breadcrumb-current">
+                {{ crumb.label }}
+              </span>
+              <mat-icon *ngIf="!last" class="breadcrumb-separator">chevron_right</mat-icon>
+            </ng-container>
+          </div>
+
+        </div>
+
+        <!-- Actions utilisateur -->
+        <div class="user-actions">
+          <!-- Notifications -->
+          <button mat-icon-button class="action-button" matTooltip="Notifications">
+            <mat-icon [matBadge]="4" matBadgeColor="warn" matBadgeSize="small"
+              aria-hidden="false">notifications</mat-icon>
+          </button>
+
+          <!-- Profil utilisateur -->
+          <ng-container *ngIf="currentUser$ | async as user">
+            <div class="user-profile" [matMenuTriggerFor]="userMenu">
+              <div class="user-avatar" matRipple [matRippleColor]="'rgba(0, 188, 212, 0.1)'">
+                <span>{{ user.prenom?.charAt(0) }}{{ user.nom?.charAt(0) }}</span>
+              </div>
+              <div class="user-info">
+                <span class="user-name">{{ user.prenom }} {{ user.nom }}</span>
+                <mat-icon class="user-dropdown-icon">arrow_drop_down</mat-icon>
+              </div>
+            </div>
+
+            <!-- Menu utilisateur -->
+            <mat-menu #userMenu="matMenu" class="user-menu">
+              <div class="user-menu-header">
+                <div class="user-menu-avatar">
+                  <span>{{ user.prenom?.charAt(0) }}{{ user.nom?.charAt(0) }}</span>
+                </div>
+                <div class="user-menu-info">
+                  <div class="user-menu-name">{{ user.prenom }} {{ user.nom }}</div>
+                  <div class="user-menu-role">{{ user.role || 'Utilisateur' }}</div>
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+              <button mat-menu-item (click)="logout()" class="logout-menu-item">
+                <mat-icon>logout</mat-icon>
+                <span>Déconnexion</span>
+              </button>
+            </mat-menu>
+          </ng-container>
+        </div>
+      </mat-toolbar>
+
+      <!-- Zone de contenu des pages -->
+      <div class="page-content">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

@@ -1,0 +1,76 @@
+<div class="login-split-container">
+  <!-- Panneau Gauche (Cyan) -->
+  <div class="left-panel">
+    <div class="brand-content">
+      <div class="main-logo-placeholder">
+        <!-- Placeholder pour le logo (Médaille/Drapeau) -->
+        <div class="logo-circle">
+          <img src="assets/logo_armp1.png" alt="Logo Armp" class="main-logo-img">
+        </div>
+      </div>
+
+      <p>BIENVENUE SUR L'ESPACE DE GESTION RH</p>
+      <span></span>
+      
+      <p>Votre espace personnel sécurisé pour la gestion de votre carrière et de vos informations RH.</p>
+    </div>
+
+    <!-- Vague décorative en bas -->
+    <div class="wave-decoration">
+      <svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#ffffff" fill-opacity="0.2"
+          d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+        </path>
+        <path fill="#ffffff" fill-opacity="0.2"
+          d="M0,256L48,245.3C96,235,192,213,288,192C384,171,480,149,576,165.3C672,181,768,235,864,245.3C960,256,1056,224,1152,197.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+        </path>
+      </svg>
+    </div>
+    <div class="copyright">© 2025 ARMP-GRH. Tous droits réservés</div>
+  </div>
+
+  <!-- Panneau Droit (Formulaire) -->
+  <div class="right-panel">
+    <div class="login-card-content">
+      <div class="form-header-logo">
+        <!-- Logo secondaire en haut du formulaire -->
+        <div class="secondary-logo">
+          <img src="assets/min.png" alt="Logo ARMP" class="logo-img">
+        </div>
+      </div>
+
+      <h2>Connexion</h2>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <div class="form-group">
+          <label for="username">User Name</label>
+          <input type="text" id="username" name="username" [(ngModel)]="credentials.username" required
+            class="rounded-input" [disabled]="isLoading">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" [(ngModel)]="credentials.password" required minlength="6"
+            class="rounded-input" [disabled]="isLoading">
+        </div>
+
+        <div class="form-options">
+          <label class="checkbox-container">
+            <input type="checkbox" name="remember">
+            <span class="checkmark"></span>
+            Remember me
+          </label>
+        </div>
+
+        <button type="submit" [disabled]="isLoading" class="btn-login">
+          <span *ngIf="!isLoading">Valider</span>
+          <span *ngIf="isLoading">En cours de connexion...</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
